@@ -20,7 +20,5 @@
       "matches": ["<all_urls>"]
     }
   ],
-  "icons": {
-    "48": "icon.png"
-  }
+  "default_icon": "icon.png"
 }
