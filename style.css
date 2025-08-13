@@ -1,42 +1,64 @@
-/* Cursor Cat Styles */
-#cursor-cat {
+#cursor-cat-container {
   position: fixed;
-  top: 0;
-  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  width: 64px; 
+  height: 64px;
+}
+
+#cursor-cat {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  /* Set the size to ONE FRAME of the sprite sheet */
+  width: 48px; 
+  height: 48px;
+  background-image: url('chrome-extension://__MSG_@@extension_id__/cat-sprites.png');
+  background-repeat: no-repeat;
+  image-rendering: pixelated; /* Keeps pixel art sharp */
+}
+
+#sleep-bubble {
+  position: absolute;
+  top: -5px; /* Position it just above the cat */
+  left: 50%;
+  transform: translateX(0%);
   width: 32px;
   height: 32px;
-  pointer-events: none; /* Ensures the cat doesn't interfere with clicking */
-  z-index: 999999; /* Makes sure the cat appears above all other content */
-  image-rendering: pixelated; /* Keeps pixel art crisp */
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-  transition: none; /* No CSS transitions - we want instant position updates */
-  user-select: none; /* Prevents the cat from being selected */
-  transform-origin: center center;
-}
-
-#cursor-cat-heart {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 16px;
-  height: 16px;
-  pointer-events: none;
-  z-index: 999998;
+  background-image: url('chrome-extension://__MSG_@@extension_id__/zzz.png');
+  background-size: contain;
+  background-repeat: no-repeat;
   image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-  opacity: 0;
-  transform-origin: center center;
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.5s ease-in-out;
 }
 
-#cursor-cat-heart.show {
+/* --- ANIMATION STATES --- */
+
+#cursor-cat.active {
+  animation: active-cycle 0.8s steps(8) infinite;
+}
+
+#cursor-cat.sleeping {
+  animation: sleep-cycle 2s steps(4) infinite;
+}
+
+/* Show the Zzz bubble only when the container is sleeping */
+#cursor-cat-container.sleeping #sleep-bubble {
   opacity: 1;
-  transform: translateY(-10px) scale(1.2);
 }
 
-/* Ensure the cat works well on all backgrounds */
-#cursor-cat, #cursor-cat-heart {
-  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
+/* --- KEYFRAME DEFINITIONS --- */
+
+/* Top row of the sprite sheet: walking/jumping */
+@keyframes active-cycle {
+  from { background-position: 0 0; }
+  to { background-position: -384px 0; } /* 8 frames * 48px width */
+}
+
+/* Bottom row of the sprite sheet: sleeping */
+@keyframes sleep-cycle {
+  from { background-position: 0 -48px; }
+  to { background-position: -192px -48px; } /* 4 frames * 48px width */
 }

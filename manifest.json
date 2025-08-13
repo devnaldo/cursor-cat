@@ -1,26 +1,25 @@
 {
   "manifest_version": 3,
-  "name": "Cursor Cat",
-  "version": "1.0",
-  "description": "A cute pixel art cat that follows your cursor and shows adorable idle animations",
-  "permissions": [
-    "activeTab"
-  ],
+  "name": "Cutest Cursor Cat",
+  "version": "3.0",
+  "description": "The cutest cat follows your cursor!",
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "js": ["content.js"],
-      "css": ["style.css"],
-      "run_at": "document_end"
+      "css": ["style.css"]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["images/*.png", "images/*.gif"],
+      "resources": [
+        "cat-sprites.png", 
+        "zzz.png"
+      ],
       "matches": ["<all_urls>"]
     }
   ],
-  "icons": {
+   "icons": {
     "48": "icon.png"
   }
 }
