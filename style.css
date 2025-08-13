@@ -1,0 +1,42 @@
+/* Cursor Cat Styles */
+#cursor-cat {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  pointer-events: none; /* Ensures the cat doesn't interfere with clicking */
+  z-index: 999999; /* Makes sure the cat appears above all other content */
+  image-rendering: pixelated; /* Keeps pixel art crisp */
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  transition: none; /* No CSS transitions - we want instant position updates */
+  user-select: none; /* Prevents the cat from being selected */
+  transform-origin: center center;
+}
+
+#cursor-cat-heart {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  z-index: 999998;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  opacity: 0;
+  transform-origin: center center;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+#cursor-cat-heart.show {
+  opacity: 1;
+  transform: translateY(-10px) scale(1.2);
+}
+
+/* Ensure the cat works well on all backgrounds */
+#cursor-cat, #cursor-cat-heart {
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
+}
