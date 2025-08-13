@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cursor Cat - Lucy</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="header">
+    <div class="cat-icon"></div>
+    <h1>Cursor Cat</h1>
+    <div class="subtitle">Lucy Edition</div>
+  </div>
+
+  <div class="controls">
+    <div class="control-item">
+      <span class="control-label">Enable Lucy</span>
+      <div class="toggle-switch active" id="enableToggle"></div>
+    </div>
+    <div class="control-item">
+      <span class="control-label">Show on all sites</span>
+      <div class="toggle-switch active" id="globalToggle"></div>
+    </div>
+  </div>
+
+  <button id="refreshButton">Refresh Current Tab</button>
+
+  <div class="info">
+    Lucy will follow your cursor around the page, rest when you're idle, and perform cute animations!
+    <div class="version">v1.0.0</div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const enableToggle = document.getElementById('enableToggle');
+      const globalToggle = document.getElementById('globalToggle');
+      const refreshButton = document.getElementById('refreshButton');
+
+      // Load saved settings
+      chrome.storage.sync.get(['lucyEnabled', 'globalEnabled'], function(result) {
+        if (result.lucyEnabled !== false) {
+          enableToggle.classList.add('active');
+        } else {
+          enableToggle.classList.remove('active');
+        }
+        
+        if (result.globalEnabled !== false) {
+          globalToggle.classList.add('active');
+        } else {
+          globalToggle.classList.remove('active');
+        }
+      });
+
+      // Toggle handlers
+      enableToggle.addEventListener('click', function() {
+        const isActive = enableToggle.classList.contains('active');
+        enableToggle.classList.toggle('active');
+        
+        chrome.storage.sync.set({
+          lucyEnabled: !isActive
+        });
+      });
+
+      globalToggle.addEventListener('click', function() {
+        const isActive = globalToggle.classList.contains('active');
+        globalToggle.classList.toggle('active');
+        
+        chrome.storage.sync.set({
+          globalEnabled: !isActive
+        });
+      });
+
+      // Refresh current tab
+      refreshButton.addEventListener('click', function() {
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+          chrome.tabs.reload(tabs[0].id);
+          window.close();
+        });
+      });
+    });
+  </script>
+</body>
+</html>
